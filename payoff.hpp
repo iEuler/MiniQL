@@ -2,6 +2,7 @@
 #define MINIQL_PAYOFF_HPP
 
 #include <string>
+#include "time/date.hpp"
 #include "typedef.hpp"
 
 namespace MiniQL {

@@ -2,6 +2,7 @@
 #define MINIQL_SETTINGS_HPP
 
 #include "patterns/singleton.hpp"
+#include "time/date.hpp"
 #include "typedef.hpp"
 
 namespace MiniQL {

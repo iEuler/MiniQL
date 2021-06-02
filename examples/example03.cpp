@@ -1,4 +1,5 @@
 // g++ example03.cpp ../instruments/swap.cpp -o out
+// cannot run, since Intrument has a pure virtual function
 
 #include <iostream>
 

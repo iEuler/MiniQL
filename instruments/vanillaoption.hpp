@@ -7,6 +7,7 @@
 #include "../payoff.hpp"
 #include "../pricingengine.hpp"
 #include "../settings.hpp"
+#include "../time/date.hpp"
 #include "../typedef.hpp"
 #include "swap.hpp" // to use YieldTermStructure
 

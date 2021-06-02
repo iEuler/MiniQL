@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "time/date.hpp"
 #include "typedef.hpp"
 
 namespace MiniQL {

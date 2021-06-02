@@ -6,9 +6,11 @@
 #include "../handle.hpp"
 #include "../instruments/swap.hpp"
 #include "../typedef.hpp"
+#include "../time/date.hpp"
 
 int main() {
-  MiniQL::Date startDate = 0.0, couponFreq = .25, maturity = 3.0;
+  MiniQL::Date startDate{0.0}, maturity{3.0};
+  MiniQL::Time couponFreq{.25};
   MiniQL::Date couponDate = startDate + couponFreq;
   MiniQL::Real couponRate = 0.1, couponAmount = couponRate * couponFreq;
   MiniQL::Real interestRate = 0.1;

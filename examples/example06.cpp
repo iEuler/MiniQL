@@ -8,6 +8,7 @@
 #include "../instruments/vanillaoption.hpp"
 #include "../patterns/observable.hpp"
 #include "../pricingengine.hpp"
+#include "../time/date.hpp"
 #include "../typedef.hpp"
 
 int main() {

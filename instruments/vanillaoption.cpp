@@ -4,6 +4,7 @@
 
 #include "../exercise.hpp"
 #include "../payoff.hpp"
+#include "../time/date.hpp"
 #include "../typedef.hpp"
 #include "vanillaoption.hpp"
 
