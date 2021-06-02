@@ -39,7 +39,7 @@ void AnalyticEuropeanEngine::calculate() const
       results_.value = optionprice;
       results_.delta = delta;
 
-      std::cout << "Vanilla option calculated.\n";
+      // std::cout << "Vanilla option calculated.\n";
 
       
     }
