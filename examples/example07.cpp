@@ -9,6 +9,7 @@
 #include "../interestrate.hpp"
 #include "../quote.hpp"
 #include "../termstructure.hpp"
+#include "../termstructures/yieldtermstructure.hpp"
 
 #define QL_ERROE_FUNCTIONS
 #define QL_ERROE_LINES
@@ -28,5 +29,5 @@ int main() {
     QL_ENSURE(5<3, "Test ensure fail.");
   }
 
-  
+
 }
