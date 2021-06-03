@@ -9,7 +9,7 @@
 #include "../settings.hpp"
 #include "../time/date.hpp"
 #include "../typedef.hpp"
-#include "swap.hpp" // to use YieldTermStructure
+#include "swap.hpp" // to use FlatTermStructure
 
 namespace MiniQL {
 
@@ -27,8 +27,8 @@ class VanillaOption : public Instrument {
       : payoff_(payoff), exercise_(exercise) { }
     VanillaOption(const std::shared_ptr<Payoff>& payoff,
                   const std::shared_ptr<Exercise>& exercise,
-                  const Handle<YieldTermStructure>& interestRate,
-                  const Handle<YieldTermStructure>& volatility,
+                  const Handle<FlatTermStructure>& interestRate,
+                  const Handle<FlatTermStructure>& volatility,
                   Real spot)
       : payoff_(payoff), exercise_(exercise), 
         interestRate_(interestRate), volatility_(volatility), 
@@ -53,7 +53,7 @@ class VanillaOption : public Instrument {
     mutable Real delta_;
     
     // below variables are for simplied version of VanillaOptions
-    Handle<YieldTermStructure> interestRate_, volatility_;
+    Handle<FlatTermStructure> interestRate_, volatility_;
     Real spot_;
     
 };
@@ -64,7 +64,7 @@ class VanillaOption::Arguments : public PricingEngine::Arguments {
     void validate() const override {}  // TODO: to implement
     std::shared_ptr<Payoff> payoff;
     std::shared_ptr<Exercise> exercise;
-    Handle<YieldTermStructure> interestRate, volatility;
+    Handle<FlatTermStructure> interestRate, volatility;
     Real spot; 
 };
 

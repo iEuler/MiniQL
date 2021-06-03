@@ -21,9 +21,9 @@ int main() {
     couponDate += couponFreq;
   }  
   // MiniQL::Swap::Handle termStructure = 
-  //     std::make_shared<MiniQL::YieldTermStructure>(startDate, interestRate);
-  MiniQL::Handle<MiniQL::YieldTermStructure> 
-      termStructure(std::make_shared<MiniQL::YieldTermStructure>(startDate, interestRate));
+  //     std::make_shared<MiniQL::FlatTermStructure>(startDate, interestRate);
+  MiniQL::Handle<MiniQL::FlatTermStructure> 
+      termStructure(std::make_shared<MiniQL::FlatTermStructure>(startDate, interestRate));
   MiniQL::Swap swap(leg1, leg2, termStructure);
   std::cout << swap.NPV() << std::endl;    
 }
