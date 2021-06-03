@@ -13,9 +13,9 @@ class Date {
     // friend Date operator-(const Date& date1, const Time& years);
     // friend Date operator+(const Date& date1, const Time& years);
     // friend Date operator+(const Time& years, const Date& date1);
-    friend std::ostream& operator<<(std::ostream& os, const Date& date) {
-      return os << date.date_;
-    }
+    // friend std::ostream& operator<<(std::ostream& os, const Date& date) {
+    //   return os << date.date_;
+    // }
   public:
     Date() = default;
     Date(double date) : date_(date) {}
@@ -46,6 +46,7 @@ class Date {
     bool operator==(const Date& date) {      
       return date_ == date.date_;
     }
+    operator Time() const { return date_; }
     
     
   protected:

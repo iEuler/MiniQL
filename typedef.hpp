@@ -6,16 +6,26 @@ namespace MiniQL {
   typedef double Real;
   typedef double Rate;
   typedef double Time;
+  typedef double DiscountFactor;
 
-  enum OptionType {
+  enum class OptionType {
     Put = -1, Call = 1
   };
 
-  enum Compounding {
+  enum class Compounding {
     Simple,                 // 1+rT
     Compounded,             // (1+r)^T
     Continous,              // e^{rT}
     SimpleThenCompounded
+  };
+
+  enum class Frequency {
+    NoFrequency = -1,       // null frequency
+    Once = 0,               // only once, e.g. a zero-coupon
+    Annual = 1,             // once a year
+    Semiannual = 1,         // twice a year
+    Quarterly = 4,          // every third month
+    Monthly = 12,           // once a month
   };
   
 }  // namespace MiniQL
