@@ -20,12 +20,15 @@ namespace MiniQL {
 
       virtual const Date& referenceDate() const { return referenceDate_; }
       virtual const Date& maxDate() const = 0;
+      Time timeFromReference(const Date& date) const { 
+        return dayCounter_.yearFraction(referenceDate(), date);
+      }
 
       void update() override { notifyObservers(); }
           
     protected:
       // bool moving_ = true;
-      mutable Date referenceDate_;
+      mutable Date referenceDate_ = Date();
       // mutable bool updated_ = true;
       Calendar calendar_;
       DayCounter dayCounter_;
