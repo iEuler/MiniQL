@@ -64,7 +64,7 @@ class YieldTermStructure : public TermStructure {
       return forwardRate(t1, t2, comp, freq);
     }
 
-    void update() override;
+    void update() override { TermStructure::update(); }
 
   protected:
     virtual DiscountFactor discountImpl(Time) const = 0;
