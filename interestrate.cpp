@@ -2,6 +2,7 @@
 
 #include "error.hpp"
 #include "interestrate.hpp"
+#include "typedef.hpp"
 
 namespace MiniQL {
 
@@ -36,7 +37,7 @@ namespace MiniQL {
     QL_REQUIRE(t>=0.0, "non negative time (" << t << ") required.");    
     Rate r;
     Real f = Real(freq);
-    if (std::abs(compoundedRate - 1.0) < 1e-15) {
+    if (std::abs(compoundedRate - 1.0) < epsilon) {
       r = 0.0;
     } else {
       switch (comp) {

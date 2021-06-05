@@ -2,11 +2,14 @@
 #define MINIQL_TYPEDEF_HPP
 
 namespace MiniQL {
+  const double epsilon = 1e-14;
   // typedef double Date;
   typedef double Real;
   typedef double Rate;
   typedef double Time;
   typedef double DiscountFactor;
+  typedef std::size_t Size;
+  
 
   enum class OptionType {
     Put = -1, Call = 1
