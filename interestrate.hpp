@@ -38,19 +38,28 @@ class InterestRate {
       return discountFactor(t);
     }
 
-    static InterestRate impliedRate(Real compoundedRate,
+    static InterestRate impliedRate(Rate compoundedRate,
                                     Time t,
                                     const DayCounter& dc = DayCounter(),
                                     Compounding comp = Compounding::Simple,
                                     Frequency freq = Frequency::Annual);
 
-    static InterestRate impliedRate(Real compoundedRate,
+    static InterestRate impliedRate(Rate compoundedRate,
                                     const Date& d1,
                                     const Date& d2,
                                     const DayCounter& dc = DayCounter(),
                                     Compounding comp = Compounding::Simple,
                                     Frequency freq = Frequency::Annual) {
       Time t = dc.yearFraction(d1, d2);
+      return impliedRate(compoundedRate, t, dc, comp, freq);
+    }
+
+    InterestRate equivalentRate(Time t,
+                                const DayCounter& dc = DayCounter(),
+                                Compounding comp = Compounding::Simple,
+                                Frequency freq = Frequency::Annual) const
+    {
+      Rate compoundedRate = compoundFactor(t);
       return impliedRate(compoundedRate, t, dc, comp, freq);
     }
 

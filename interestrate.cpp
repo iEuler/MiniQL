@@ -28,7 +28,7 @@ namespace MiniQL {
 
   }
 
-  InterestRate InterestRate::impliedRate(Real compoundedRate,
+  InterestRate InterestRate::impliedRate(Rate compoundedRate,
                                          Time t,
                                          const DayCounter& dc = DayCounter(),
                                          Compounding comp = Compounding::Simple,
