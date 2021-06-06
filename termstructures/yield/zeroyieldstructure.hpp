@@ -25,7 +25,7 @@ class ZeroYieldStructure : public YieldTermStructure {
     virtual Rate zeroYieldImpl(Time t) const = 0;
 
     DiscountFactor discountImpl(Time t) const override {
-      if (t < epsilon) 
+      if (t < QL_EPSILON) 
         return 1.0;
       Rate r = zeroYieldImpl(t);
       return DiscountFactor(std::exp( - r*t));

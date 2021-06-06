@@ -12,7 +12,6 @@
 namespace MiniQL {
 
 constexpr Size MAX_FUNCTION_EVALUATIONS = 100;
-constexpr Real QL_EPSILON = 1e-14;
 
 template<class Impl>
 class Solver1D : public CuriouslyRecurringTemplate<Impl> {

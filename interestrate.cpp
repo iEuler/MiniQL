@@ -37,7 +37,7 @@ namespace MiniQL {
     QL_REQUIRE(t>=0.0, "non negative time (" << t << ") required.");    
     Rate r;
     Real f = Real(freq);
-    if (std::abs(compoundedRate - 1.0) < epsilon) {
+    if (std::abs(compoundedRate - 1.0) < QL_EPSILON) {
       r = 0.0;
     } else {
       switch (comp) {

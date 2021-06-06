@@ -45,7 +45,7 @@ class YieldTermStructure : public TermStructure {
       QL_REQUIRE(t1<=t2, t1 << " is later than " << t2);
       Real compoundedRate;
       Time dt = 0.0001;
-      if (std::abs(t1-t2) < epsilon) 
+      if (std::abs(t1-t2) < QL_EPSILON) 
       {
         t1 = std::max(t1 - dt/2.0, 0.0);
         t2 = t1 + dt;

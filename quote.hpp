@@ -9,7 +9,7 @@ namespace MiniQL {
 class Quote: public virtual Observable {
   public:
     ~Quote() override = default;
-    virtual Real value() = 0;    
+    virtual Real value() const = 0;    
 };
 
 }  // namespace MiniQL

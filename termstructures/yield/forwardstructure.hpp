@@ -26,7 +26,7 @@ class ForwardRateStructure : public YieldTermStructure {
 
     // zero-yield calculation
     virtual Rate zeroYieldImpl(Time t) const {
-      if (t < epsilon)
+      if (t < QL_EPSILON)
         return forwardRateImpl(0.0);
       
       int N = 100;
@@ -42,7 +42,7 @@ class ForwardRateStructure : public YieldTermStructure {
     }
 
     DiscountFactor discountImpl(Time t) const override {
-      if (t < epsilon) 
+      if (t < QL_EPSILON) 
         return 1.0;
       Rate r = zeroYieldImpl(t);
       return DiscountFactor(std::exp( - r*t));
