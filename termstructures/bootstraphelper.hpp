@@ -56,6 +56,16 @@ namespace MiniQL {
       Date maturityDate_;
   };
 
+  class BootstrapHelperSorter {
+    public:
+      template<class Helper>
+      bool operator()(const std::shared_ptr<Helper>& h1,
+                      const std::shared_ptr<Helper>& h2) const
+      {
+        return h1->maturityDate() < h2->maturityDate();
+      }
+  };
+
 
 }  // namespace MiniQL
 

@@ -1,8 +1,6 @@
 #ifndef MINIQL_BOOTSTRAPTRAITS_HPP
 #define MINIQL_BOOTSTRAPTRAITS_HPP
 
-#include <cmath>
-
 #include "zerocurve.hpp"
 #include "../bootstraphelper.hpp"
 #include "../interpolatedcurve.hpp"

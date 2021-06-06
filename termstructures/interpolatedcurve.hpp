@@ -17,14 +17,19 @@ template<class Interpolator>
 class InterpolatedCurve {
   public:
     InterpolatedCurve() = default;
+    
     // standard constructor
     InterpolatedCurve(std::vector<Time> times,
                       std::vector<Real> data,
                       const Interpolator& i = Interpolator())
-    : times_(std::move(times)), data_(std::move(data)), interpolator_(i) 
-    {
-      setupInterpolation();
-    }
+    : times_(std::move(times)), data_(std::move(data)), interpolator_(i) { }
+    // {
+    //   setupInterpolation();
+    // }
+    
+    InterpolatedCurve(const Interpolator& i = Interpolator())
+    : interpolator_(i) { }
+    
     // copy constructor
     InterpolatedCurve(const InterpolatedCurve& c)
     : times_(c.times_), data_(c.data_), interpolator_(c.interpolator_) 

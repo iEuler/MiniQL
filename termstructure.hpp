@@ -19,7 +19,7 @@ namespace MiniQL {
       ~TermStructure() override = default;
 
       virtual const Date& referenceDate() const { return referenceDate_; }
-      virtual const Date& maxDate() const = 0;
+      // virtual const Date& maxDate() const = 0;
       Time timeFromReference(const Date& date) const { 
         return dayCounter_.yearFraction(referenceDate(), date);
       }

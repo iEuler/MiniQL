@@ -15,8 +15,8 @@ class YieldTermStructure : public TermStructure {
   public:
     YieldTermStructure() = default;
     YieldTermStructure(const Date& referenceDate,
-                  const Calendar& calendar = Calendar(),
-                  const DayCounter& dc = DayCounter())
+                       const Calendar& calendar = Calendar(),
+                       const DayCounter& dc = DayCounter())
       : TermStructure(referenceDate, calendar, dc) {}    
     ~YieldTermStructure() override = default;
 
