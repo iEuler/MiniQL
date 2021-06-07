@@ -31,18 +31,27 @@ inline Real Secant::solveImpl(const F& f, Real xAccuracy) const {
   
   // Pick the bound with the smaller function value
   // as the most recent guess
-  if (std::fabs(fxMin_) < std::fabs(fxMax_)) {
-      root_ = xMin_;
-      froot = fxMin_;
-      xl = xMax_;
-      fl = fxMax_;
-  } else {
-      root_ = xMax_;
-      froot = fxMax_;
-      xl = xMin_;
-      fl = fxMin_;
-  }
+  // if (std::fabs(fxMin_) < std::fabs(fxMax_)) {
+  //     root_ = xMin_;
+  //     froot = fxMin_;
+  //     xl = xMax_;
+  //     fl = fxMax_;
+  // } else {
+  //     root_ = xMax_;
+  //     froot = fxMax_;
+  //     xl = xMin_;
+  //     fl = fxMin_;
+  // }
 
+  // use newton's method for first step
+  xl = root_;
+  fl = f(root_);
+  Real slope = ( f(root_ + 0.0001) - fl ) / 0.0001;
+  if (std::abs(slope) < 1e-4) 
+    slope = slope >= 0.0? 1.0 : -1.0;
+  root_ = root_ - fl / slope;
+  froot = f(root_);
+  
   while (evaluationNumber_<=maxEvaluations_) {
       dx = (xl-root_)*froot/(froot-fl);
       xl = root_;

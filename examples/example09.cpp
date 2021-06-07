@@ -8,7 +8,7 @@
 
 class Myfunc1 {
   public:
-    double operator()(double x) const { return (x-11.356)*(x*x - x + 1.0); }
+    double operator()(double x) const { return (x-6.356)*(x*x - x + 1.0); }
 };
 
 int main() {

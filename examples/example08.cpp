@@ -2,6 +2,19 @@
 #include <iostream>
 #include <random>
 
+template<typename T>
+class A {
+  public:
+    void print() { std::cout << "class A" << std::endl; }
+};
+
+typedef A<int> Aint;
+
+class B: public Aint {
+  public:
+    void printB() { std::cout << "class B" << std::endl; }
+};
+
 int main() {
   std::unordered_multiset<int> c;
   std::cout << c.max_size() << std::endl;
@@ -16,4 +29,11 @@ int main() {
       cnt_last = cnt;
     }
   }
+
+  A<double> a;
+  B b;
+  a.print();
+  b.print();
+  b.printB();
+  
 }

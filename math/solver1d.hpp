@@ -71,17 +71,26 @@ inline Real Solver1D<Impl>::solve(const F& f,
   accuracy = std::max(accuracy, QL_EPSILON);
   xMin_ = xMin;
   xMax_ = xMax;
-  if (close(xMin, xMax)) {
-    xMin_ -= 1.0;
-    xMax_ += 1.0;
-  }  
-  // std::cout << xMin_ << ", " << xMax_ << std::endl;
+  root_ = guess;
 
+  // use newton's method to find a better guess, xMin_ and xMax_
+  Real slope = ( f(root_ + 0.0001) - f(root_) ) / 0.0001;
+  if (std::abs(slope) < 1e-4) 
+    slope = slope >= 0.0? 1.0 : -1.0;
+  Real dx = - f(root_) / slope;
+  root_ = root_ + dx;
+  xMin_ = root_ - 3.0 * std::abs(dx);
+  xMax_ = root_ + 3.0 * std::abs(dx);
+  // if (close(xMin, xMax)) {        
+  //   xMin_ -= 1.0;
+  //   xMax_ += 1.0;
+  // }  
+  
   QL_REQUIRE(xMin_ <= xMax_, "invalid range: xMin (" << xMin_ << ") > xMax (" << xMax_ << ")" );
-  QL_REQUIRE(!lowerBoundEnforced_ || xMin_ >= lowerBound_ , 
-             "xMin (" << xMin_ << ") < enforced lower bound (" << lowerBound_ << ")" );
-  QL_REQUIRE(!upperBoundEnforced_ || xMax_ <= upperBound_ , 
-             "xMax (" << xMax_ << ") > enforced upper bound (" << upperBound_ << ")" );
+  // QL_REQUIRE(!lowerBoundEnforced_ || xMin_ >= lowerBound_ , 
+  //            "xMin (" << xMin_ << ") < enforced lower bound (" << lowerBound_ << ")" );
+  // QL_REQUIRE(!upperBoundEnforced_ || xMax_ <= upperBound_ , 
+  //            "xMax (" << xMax_ << ") > enforced upper bound (" << upperBound_ << ")" );
   fxMin_ = f(xMin_);
   if (std::abs(fxMin_) < accuracy)
     return xMin_;
@@ -99,8 +108,6 @@ inline Real Solver1D<Impl>::solve(const F& f,
               "guess (" << guess << ") is not in [xMin, xMax] = [" << xMin_ << ", " << xMax_ << "]");
   }
 
-  root_ = guess;  
-  
   return this->impl().solveImpl(f, accuracy);
 
 }

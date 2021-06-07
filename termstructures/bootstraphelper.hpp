@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <memory>
+#include <cmath>
 
 // #include "../termstructure.hpp"
 
@@ -11,6 +12,7 @@
 #include "../patterns/observable.hpp"
 #include "../quote.hpp"
 #include "../quotes/simplequote.hpp"
+#include "../settings.hpp"
 #include "../time/date.hpp"
 #include "../typedef.hpp"
 
@@ -65,6 +67,27 @@ namespace MiniQL {
         return h1->maturityDate() < h2->maturityDate();
       }
   };
+
+  // template<typename TS>
+  // class RaletiveDateBootstrapHelper : public BootstrapHelper<TS> {
+  //   public:
+  //     explicit RaletiveDateBootstrapHelper(const Handle<Quote>& quote);
+  //     explicit RaletiveDateBootstrapHelper(Real quote);
+
+  //     void update() override {
+  //       Date d = Settings::instance().evaluationDate();
+  //       if (std::abs(evaluationDate_ - d) > QL_EPSILON)
+  //       {
+  //         evaluationDate_ = d;
+  //         initializeDates();
+  //       }
+  //       BootstrapHelper<TS>::update();
+  //     }
+    
+  //   protected:
+  //     virtual void initializeDates() = 0;
+  //     Date evaluationDate_;
+  // };
 
 
 }  // namespace MiniQL
