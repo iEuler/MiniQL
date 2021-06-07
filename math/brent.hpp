@@ -1,6 +1,8 @@
 #ifndef MINIQL_BRENT_HPP
 #define MINIQL_BRENT_HPP
 
+#include <cmath>
+
 #include "../error.hpp"
 #include "../typedef.hpp"
 #include "solver1d.hpp"
@@ -19,10 +21,7 @@ class Brent : public Solver1D<Brent> {
     Real sign(Real a, Real b) const {
       return b>=0.0 ? std::abs(a) : -std::abs(a);
     }
-    bool close(Real x1, Real x2) const {
-      return std::abs(x1-x2) < QL_EPSILON;
-    }
-
+   
 };
 
 template<class F>
