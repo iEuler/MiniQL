@@ -30,9 +30,9 @@ namespace MiniQL {
 
   InterestRate InterestRate::impliedRate(Rate compoundedRate,
                                          Time t,
-                                         const DayCounter& dc = DayCounter(),
-                                         Compounding comp = Compounding::Simple,
-                                         Frequency freq = Frequency::Annual) 
+                                         const DayCounter& dc,
+                                         Compounding comp,
+                                         Frequency freq) 
   {
     QL_REQUIRE(t>=0.0, "non negative time (" << t << ") required.");    
     Rate r;

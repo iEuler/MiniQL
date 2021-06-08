@@ -1,5 +1,5 @@
 // this file to test interpolation
-// g++ examples/example10.cpp patterns/observable.cpp -o out
+// g++ examples/example10.cpp patterns/observable.cpp interestrate.cpp -o out
 
 #include <iostream>
 #include <vector>
@@ -26,7 +26,29 @@ int main() {
     std::cout << xTest[i] << ", " << yTest[i] << ", " << yTestDerivative[i] << std::endl;
   }
 
-  MiniQL::Date today = 0.0;  
-  MiniQL::InterpolatedZeroCurve<MiniQL::Linear> zero;
+  // MiniQL::Date today = 0.0;  
+  std::vector<MiniQL::Date> dates{0.3, 1.0, 2.0, 2.5, 3.0};
+  std::vector<MiniQL::Rate> yields{0.005, 0.01, 0.02, 0.03, 0.04};
+  MiniQL::InterpolatedZeroCurve<MiniQL::Linear> zero(dates, yields);
+
+  auto dates_out = zero.dates();
+  auto times_out = zero.times();
+  auto data_out = zero.data();
+  
+  
+
+  for (auto x : dates_out) std::cout << x << ", ";
+  std::cout << std::endl;
+  for (auto x : times_out) std::cout << x << ", ";
+  std::cout << std::endl;
+  for (auto x : data_out) std::cout << x << ", ";
+  std::cout << std::endl;
+  std::vector<MiniQL::Real> interpolated_data;
+  for (auto x : xTest) {
+    interpolated_data.push_back(zero.zeroYieldImpl(x));    
+  }
+  for (std::size_t i = 0; i < xTest.size(); ++i) {
+    std::cout << xTest[i] << ", " << interpolated_data[i] << std::endl;
+  }
 
 }

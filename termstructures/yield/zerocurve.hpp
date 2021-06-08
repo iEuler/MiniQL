@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <vector>
+#include <iostream>
 
 #include "../../error.hpp"
 #include "../../interestrate.hpp"
@@ -74,15 +75,22 @@ void InterpolatedZeroCurve<Interpolator>::initialize(
   for (Size i=1; i<dates_.size(); ++i) 
     this->times_[i] = this->dayCounter_.yearFraction(dates_[0], dates_[i]);      
   
+  std::cout << "flag 1" << std::endl;
+  for (auto x : this->times_) std::cout << x << ", ";
+  std::cout << std::endl;
+
   if (comp != Compounding::Continous) {    
     this->times_[0] = 1.0/365;
     for (Size i=0; i<dates_.size(); ++i) 
     {
       InterestRate r(this->data_[i], this->dayCounter_, comp, frequency);
+      std::cout << r << ", " << this->times_[i] << std::endl;
       this->data_[i] = r.equivalentRate(this->times_[i], this->dayCounter_, comp, frequency);  
     }
     this->times_[0] = 0.0;
   }
+
+  std::cout << "flag 2" << std::endl;
 
   // need to rebuild interpolation_, which depends on times_
   this->interpolation_ = this->interpolator_.interpolate(this->times_.begin(),

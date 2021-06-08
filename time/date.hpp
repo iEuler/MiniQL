@@ -89,7 +89,7 @@ class DayCounter {
     std::string name() const { return name_; }
     // Time yearFraction(const Date& date1, const Date& date2) const;
     Time yearFraction(const Date& date1, const Date& date2) const {
-      return date1 - date2;
+      return date2 - date1;
     }
 
 
