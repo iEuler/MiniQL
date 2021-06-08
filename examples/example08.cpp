@@ -1,6 +1,10 @@
 #include <unordered_set>
 #include <iostream>
 #include <random>
+#include <memory>
+#include <list>
+
+#include <ext/new_allocator.h>
 
 template<typename T>
 class A {
@@ -35,5 +39,17 @@ int main() {
   a.print();
   b.print();
   b.printB();
+
+  std::list<int, std::allocator<int>> c1;
+  std::list<int, __gnu_cxx::new_allocator<int>> c2;
+
+  int* p;
+  std::allocator<int> alloc1;
+  p = alloc1.allocate(10);
+  alloc1.deallocate(p, 10);
+
+  __gnu_cxx::new_allocator<int> alloc2;
+  p = alloc2.allocate(10);
+  alloc2.deallocate(p, 10);
   
 }

@@ -30,7 +30,7 @@ class Interpolation {
           else if (x >= *(xEnd_-1))
             return xEnd_-2;
           else
-            return std::lower_bound(xBegin_, xEnd_, x);
+            return std::upper_bound(xBegin_, xEnd_, x) - 1;
         }
 
         virtual void update() = 0;

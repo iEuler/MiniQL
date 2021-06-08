@@ -1,3 +1,6 @@
+// this file is to test the root finding algo
+// g++ examples/example09.cpp -o out
+
 #include <iostream>
 #include <memory>
 #include <exception>

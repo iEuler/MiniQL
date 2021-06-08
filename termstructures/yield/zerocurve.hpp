@@ -25,16 +25,16 @@ class InterpolatedZeroCurve : public ZeroYieldStructure,
                           const Calendar& calendar = Calendar(),
                           const DayCounter& dc = DayCounter(),
                           const Interpolator& interpolator = Interpolator());      
-    // InterpolatedZeroCurve(const Date& referenceDate,
-    //                       const Calendar& calendar = Calendar(),
-    //                       const DayCounter& dc = DayCounter(),
-    //                       const Interpolator& interpolator = Interpolator())
-    // : ZeroYieldStructure(referenceDate, calendar, dc),
-    //   InterpolatedCurve<Interpolator>(interpolator) {}
+    InterpolatedZeroCurve(const Date& referenceDate,
+                          const Calendar& calendar = Calendar(),
+                          const DayCounter& dc = DayCounter(),
+                          const Interpolator& interpolator = Interpolator())
+    : ZeroYieldStructure(referenceDate, calendar, dc),
+      InterpolatedCurve<Interpolator>(interpolator) {}
 
     ~InterpolatedZeroCurve() override = default;
 
-    const Date& maxDate() const overrride { return dates_.back(); }
+    // const Date& maxDate() const overrride { return dates_.back(); }
 
     const std::vector<Date>& dates() const { return dates_; }
     const std::vector<Time>& times() const { return this->times_; }
@@ -71,12 +71,12 @@ void InterpolatedZeroCurve<Interpolator>::initialize(
   const Frequency& frequency)
 {
   this->times_.resize(dates_.size());
-  for (Size i=1; i<dates_size(); ++i) 
+  for (Size i=1; i<dates_.size(); ++i) 
     this->times_[i] = this->dayCounter_.yearFraction(dates_[0], dates_[i]);      
   
   if (comp != Compounding::Continous) {    
     this->times_[0] = 1.0/365;
-    for (Size i=0; i<dates_size(); ++i) 
+    for (Size i=0; i<dates_.size(); ++i) 
     {
       InterestRate r(this->data_[i], this->dayCounter_, comp, frequency);
       this->data_[i] = r.equivalentRate(this->times_[i], this->dayCounter_, comp, frequency);  

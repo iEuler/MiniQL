@@ -16,7 +16,7 @@ namespace MiniQL {
 template<class Interpolator>
 class InterpolatedCurve {
   public:
-    InterpolatedCurve() = default;
+    // InterpolatedCurve() = default;
     
     // standard constructor
     InterpolatedCurve(std::vector<Time> times,
@@ -27,6 +27,7 @@ class InterpolatedCurve {
     //   setupInterpolation();
     // }
     
+    // Note the constructor below is also default constructor
     InterpolatedCurve(const Interpolator& i = Interpolator())
     : interpolator_(i) { }
     
