@@ -1,0 +1,35 @@
+# cmake_minimum_required(VERSION 3.5)
+# project(learn011_cmake)
+# add_executable(${PROJECT_NAME} learn011_variableaddress.cpp)
+
+# An alternative to setting specific file names in the SOURCES variable is to use a GLOB command to find files using wildcard pattern matching.
+
+# file(GLOB SOURCES "src/*.cpp")
+
+cmake_minimum_required(VERSION 3.5)
+project(vanilla_option)
+# set(SOURCES
+#     examples/example06.cpp
+#     instruments/swap.cpp
+#     instruments/vanillaoption.cpp
+#     patterns/observable.cpp
+# )
+# add_executable(${PROJECT_NAME} ${SOURCES})
+add_library(vanilla_option_library STATIC
+  instruments/swap.cpp
+  instruments/vanillaoption.cpp
+  patterns/observable.cpp
+)
+
+# if .hpp files are in include folder, and in cpp file this folder name is not in #include
+# i.e. #include "swap.hpp" instead of #include "instruments/swap.hpp"
+# target_include_directories(hello_library
+#     PUBLIC
+#         ${PROJECT_SOURCE_DIR}/include
+# )
+
+add_executable(${PROJECT_NAME} examples/example06.cpp)
+target_link_libraries(${PROJECT_NAME}
+  PRIVATE
+    vanilla_option_library
+  )

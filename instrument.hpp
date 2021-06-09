@@ -8,6 +8,7 @@
 // #include "observable.hpp"
 #include "patterns/lazyobject.hpp"
 #include "pricingengine.hpp"
+#include "time/date.hpp"
 #include "typedef.hpp"
 
 namespace MiniQL {

@@ -8,6 +8,7 @@
 #include "../instruments/vanillaoption.hpp"
 #include "../patterns/observable.hpp"
 #include "../pricingengine.hpp"
+#include "../time/date.hpp"
 #include "../typedef.hpp"
 
 int main() {
@@ -25,10 +26,10 @@ int main() {
   // MiniQL::StrikedTypePayoff payoff(MiniQL::OptionType::Call, strike);  
   // MiniQL::Exercise exercise(MiniQL::Exercise::Type::European, std::vector<Date>{expiry});
 
-  MiniQL::Handle<MiniQL::YieldTermStructure> 
-      interestRate(std::make_shared<MiniQL::YieldTermStructure>(today, ir));
-  MiniQL::Handle<MiniQL::YieldTermStructure> 
-      volatility(std::make_shared<MiniQL::YieldTermStructure>(today, vol));
+  MiniQL::Handle<MiniQL::FlatTermStructure> 
+      interestRate(std::make_shared<MiniQL::FlatTermStructure>(today, ir));
+  MiniQL::Handle<MiniQL::FlatTermStructure> 
+      volatility(std::make_shared<MiniQL::FlatTermStructure>(today, vol));
 
   // instrument  
   MiniQL::VanillaOption vanillaoption(payoff, exercise, interestRate, volatility, spot);

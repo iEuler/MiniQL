@@ -6,9 +6,11 @@
 #include "../handle.hpp"
 #include "../instruments/swap.hpp"
 #include "../typedef.hpp"
+#include "../time/date.hpp"
 
 int main() {
-  MiniQL::Date startDate = 0.0, couponFreq = .25, maturity = 3.0;
+  MiniQL::Date startDate{0.0}, maturity{3.0};
+  MiniQL::Time couponFreq{.25};
   MiniQL::Date couponDate = startDate + couponFreq;
   MiniQL::Real couponRate = 0.1, couponAmount = couponRate * couponFreq;
   MiniQL::Real interestRate = 0.1;
@@ -19,9 +21,9 @@ int main() {
     couponDate += couponFreq;
   }  
   // MiniQL::Swap::Handle termStructure = 
-  //     std::make_shared<MiniQL::YieldTermStructure>(startDate, interestRate);
-  MiniQL::Handle<MiniQL::YieldTermStructure> 
-      termStructure(std::make_shared<MiniQL::YieldTermStructure>(startDate, interestRate));
+  //     std::make_shared<MiniQL::FlatTermStructure>(startDate, interestRate);
+  MiniQL::Handle<MiniQL::FlatTermStructure> 
+      termStructure(std::make_shared<MiniQL::FlatTermStructure>(startDate, interestRate));
   MiniQL::Swap swap(leg1, leg2, termStructure);
   std::cout << swap.NPV() << std::endl;    
 }

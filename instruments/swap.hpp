@@ -8,6 +8,7 @@
 #include "../handle.hpp"
 #include "../instrument.hpp"
 #include "../patterns/observable.hpp"
+#include "../time/date.hpp"
 #include "../typedef.hpp"
 
 namespace MiniQL {  
@@ -26,12 +27,12 @@ class CashFlow : public Observable {
     Real amount_ = 0.0;
 };
 
-class YieldTermStructure : public Observable {
+class FlatTermStructure : public Observable {
   public:
-    YieldTermStructure() = default;
-    YieldTermStructure(const Date& referenceDate, const Real& interestRate) 
+    FlatTermStructure() = default;
+    FlatTermStructure(const Date& referenceDate, const Real& interestRate) 
         : referenceDate_(referenceDate), interestRate_(interestRate) {}
-    ~YieldTermStructure() = default;
+    ~FlatTermStructure() = default;
     
     Real interestRate() const { return interestRate_; }
     Date referenceDate() const { return referenceDate_; }
@@ -45,10 +46,10 @@ class Swap : public Instrument {
   public:
     typedef std::vector<std::shared_ptr<CashFlow>> Leg;
     // simplified version. Need to redefine Handle class
-    // typedef std::shared_ptr<YieldTermStructure> Handle; 
+    // typedef std::shared_ptr<FlatTermStructure> Handle; 
     Swap() = default;
     // Swap(const Leg&, const Leg&, const Handle&);
-    Swap(const Leg&, const Leg&, const Handle<YieldTermStructure>&);
+    Swap(const Leg&, const Leg&, const Handle<FlatTermStructure>&);
     ~Swap() = default;
 
     bool isExpired() const override;
@@ -62,13 +63,13 @@ class Swap : public Instrument {
     void performCalculations() const override;
     void setupExpired() const override;
     Leg firstLeg_, secondLeg_;
-    Handle<YieldTermStructure> termStructure_;
+    Handle<FlatTermStructure> termStructure_;
     // mutable Real firstLegBPS_, secondLegBPS_;
 };
 
 inline Swap::Swap(const Leg& firstLeg, 
                   const Leg& secondLeg, 
-                  const Handle<YieldTermStructure>& termStructure) 
+                  const Handle<FlatTermStructure>& termStructure) 
 : firstLeg_(firstLeg), secondLeg_(secondLeg), termStructure_(termStructure)
 {
   // The registerWith works on Handle, because there is an automatic conversion 
