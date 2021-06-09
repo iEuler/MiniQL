@@ -14,7 +14,7 @@ class Interpolation {
     
     class Impl {
       public:   
-        typedef std::vector<Real>::iterator Iter;
+        typedef std::vector<Real>::const_iterator Iter;
 
         Impl(const Iter& xBegin, const Iter& xEnd, const Iter& yBegin)
         : xBegin_(xBegin), xEnd_(xEnd), yBegin_(yBegin) { }

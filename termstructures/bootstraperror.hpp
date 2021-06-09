@@ -15,12 +15,14 @@ namespace MiniQL {
       typedef typename Curve::traits_type Traits;
       
       BootstrapError(const Curve* curve, 
-                     std::shared_ptr<typename Traits::helper> instrument,
+                     std::shared_ptr<typename Traits::helper> helper,
                      Size segment)
       : curve_(curve), helper_(std::move(helper)), segment_(segment) { }
 
       Real operator()(Rate guess) const 
       {
+        // curve_->data_[segment_] = guess; 
+        Traits::updateGuess(curve_->data_, guess, segment_); // Curve is friend of BootstrapError
         curve_->interpolation_.update();
         return helper_->quoteError();
       }

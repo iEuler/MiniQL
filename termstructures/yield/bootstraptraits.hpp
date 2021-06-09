@@ -1,6 +1,8 @@
 #ifndef MINIQL_BOOTSTRAPTRAITS_HPP
 #define MINIQL_BOOTSTRAPTRAITS_HPP
 
+#include <vector>
+
 #include "zerocurve.hpp"
 #include "../bootstraphelper.hpp"
 #include "../interpolatedcurve.hpp"
@@ -35,7 +37,16 @@ namespace MiniQL {
     {
       if (i==0) return 0.0;
       return c->data()[i-1];
-    }    
+    }   
+
+    static void updateGuess(std::vector<Real>& data, Real rate, Size i)
+    {
+      data[i] = rate;
+      if (i==1)
+        data[0] = rate; 
+      // for zero yield, the first data (corresponding to maturity = 0) is 
+      // same as the first zero yield with non-zero maturity
+    }  
 
   };
 

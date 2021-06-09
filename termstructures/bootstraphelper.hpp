@@ -29,7 +29,7 @@ namespace MiniQL {
   // std::ostream& operator<<(std::ostream&, Pillar::Choice);
 
   template<class TS>
-  class BootstrapHelper : public Observalbe, public Observer {
+  class BootstrapHelper : public Observable, public Observer {
     public:
       explicit BootstrapHelper(Handle<Quote> quote) 
       : quote_(std::move(quote)) 
@@ -52,7 +52,7 @@ namespace MiniQL {
       void update() override { notifyObservers(); }
 
     protected:
-      Handel<Quote> quote_;
+      Handle<Quote> quote_;
       TS* termStructure_ = nullptr;
       Date earliestDate_, latestDate_;
       Date maturityDate_;

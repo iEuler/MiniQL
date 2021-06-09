@@ -3,15 +3,16 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iterator>
 #include <memory>
 #include <vector>
 
 #include "bootstraperror.hpp"
 #include "bootstraphelper.hpp"
-#include "../../error.hpp"
-#include "../../typedef.hpp"
-#include "../../math/brent.hpp"
-#include "../../math/secant.hpp"
+#include "../error.hpp"
+#include "../typedef.hpp"
+#include "../math/brent.hpp"
+#include "../math/secant.hpp"
 
 
 // TODO: ipmlement initialize(), setup(), calculate()
@@ -70,7 +71,7 @@ void IterativeBootstrap<Curve>::initialize() const
   Date firstDate = Traits::initialDate(ts_);
   QL_REQUIRE(ts_->instruments_.back()->maturityDate() > firstDate,
              "all instruments expired");
-  firstAliveHelper_ = 0,
+  firstAliveHelper_ = 0;
   while (ts_->instruments_[firstAliveHelper_]->maturityDate() <= firstDate)
     ++ firstAliveHelper_;
   alive_ = n_ - firstAliveHelper_;
@@ -79,8 +80,10 @@ void IterativeBootstrap<Curve>::initialize() const
   // calculate dates and times, create errros_
   std::vector<Date>& dates = ts_->dates_;
   std::vector<Time>& times = ts_->times_;
+  std::vector<Real>& data = ts_->data_;
   dates.resize(alive_+1);
   times.resize(alive_+1);
+  data.resize(alive_+1);
   errors_.resize(alive_+1);
   dates[0] = firstDate;
   times[0] = ts_->timeFromReference(dates[0]);
@@ -111,7 +114,7 @@ void IterativeBootstrap<Curve>::calculate() const
     // ts_ of type Curve = PiecewiseYieldCurve<Traits, Interpolator, IterativeBootstrap>
     // helper is of type BootstrapHelper<YieldTermStructure>
   }
-
+  
   const std::vector<Time>& times = ts_->times_;
   const std::vector<Real>& data = ts_->data_;
   Real accuracy = accuracy_;
@@ -127,23 +130,24 @@ void IterativeBootstrap<Curve>::calculate() const
     for (Size i=1; i<=alive_; ++i)
     {
       Real guess = Traits::guess(i, ts_);
-      if (!validatData) 
+      if (!validData) 
       {
         ts_->interpolation_ = ts_->interpolator_.interpolate(times.begin(),
-                                                              times.begin()+i+1,
-                                                              data.begin());
+                                                             times.begin() + i + 1,
+                                                            //  times.end(),
+                                                            //  std::next(times.begin(), i+1),
+                                                             data.begin());
         ts_->interpolation_.update();
       }
-
-      // TODO
-      solver_.solve(*errors_[i], accuracy, guess, min, max);
+      
+      solver_.solve(*errors_[i], accuracy, guess, guess, guess);  // data and ts_->data_ are updated in this process
       
     }
 
     // exit condition
     Real change = std::abs(data[1] - previousData_[1]);
     for (Size i=2; i<=alive_; ++i)
-      change = std:max(change, std::abs(data[i] - previousData_[i]));
+      change = std::max(change, std::abs(data[i] - previousData_[i]));
     if (change < accuracy)
       break;
     

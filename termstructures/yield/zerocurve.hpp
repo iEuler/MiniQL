@@ -85,7 +85,10 @@ void InterpolatedZeroCurve<Interpolator>::initialize(
     {
       InterestRate r(this->data_[i], this->dayCounter_, comp, frequency);
       std::cout << r << ", " << this->times_[i] << std::endl;
-      this->data_[i] = r.equivalentRate(this->times_[i], this->dayCounter_, comp, frequency);  
+      this->data_[i] = r.equivalentRate(this->times_[i], 
+                                        this->dayCounter_, 
+                                        Compounding::Continous, 
+                                        frequency);  
     }
     this->times_[0] = 0.0;
   }

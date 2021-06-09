@@ -1,10 +1,12 @@
 #ifndef MINIQL_PIECEWISEYIELDCURVE_HPP
 #define MINIQL_PIECEWISEYIELDCURVE_HPP
 
+#include <iostream>
 #include <memory>
 #include <vector>
 
 #include "bootstraptraits.hpp"
+#include "../bootstraperror.hpp"
 #include "../iterativebootstrap.hpp"
 #include "../../patterns/lazyobject.hpp"
 
@@ -29,6 +31,7 @@ class PiecewiseYieldCurve
     // bootstrap_type = IterativeBootstrap<PiecewiseYieldCurve<Traits, Interpolator, IterativeBootstrap>>
 
     friend class Bootstrap<this_curve>;
+    friend class BootstrapError<this_curve> ;
 
     PiecewiseYieldCurve(
         const Date& referenceDate,
@@ -44,29 +47,31 @@ class PiecewiseYieldCurve
       bootstrap_.setup(this);
     }
 
-    const Date& maxDate() const override;
+    // const Date& maxDate() const override;
     const std::vector<Date>& dates() const;
     const std::vector<Time>& times() const;
     const std::vector<Real>& data() const;
 
-    // void update() override;
+    // Note: update() must be defined in this class, since it has been defined
+    // in both base classes: InterpolatedZeroCurve<Interpolator> and LazyObejct
+    void update() override { LazyObject::update(); }  
 
   private:
-    void performCalculation() const override;
+    void performCalculations() const override;
     DiscountFactor discountImpl(Time) const override;
     std::vector<std::shared_ptr<typename Traits::helper> > instruments_;
-    // instruments_ is of type BootstrapHelper<YieldTermStructure>
+    // *instruments_[i] is of type BootstrapHelper<YieldTermStructure>
     Real accuracy_;
     Bootstrap<this_curve> bootstrap_;
 
 };
 
-template<class C, class I, template<class> class B> 
-inline const Date& PiecewiseYieldCurve<C,I,B>::maxDate() const 
-{ 
-  calculate();
-  return base_curve::maxDate(); 
-}
+// template<class C, class I, template<class> class B> 
+// inline const Date& PiecewiseYieldCurve<C,I,B>::maxDate() const 
+// { 
+//   calculate();
+//   return base_curve::maxDate(); 
+// }
 
 template<class C, class I, template<class> class B> 
 inline const std::vector<Date>& PiecewiseYieldCurve<C,I,B>::dates() const 
@@ -97,10 +102,10 @@ inline DiscountFactor PiecewiseYieldCurve<C,I,B>::discountImpl(Time t) const
 }
 
 template<class C, class I, template<class> class B>
-inline void PiecewiseYieldCurve<C,I,B>::performCalculation() const
+inline void PiecewiseYieldCurve<C,I,B>::performCalculations() const
 {
   // delegate to bootstrapper
-  bootstrap_.calculate();
+  bootstrap_.calculate();  
 }
     
 

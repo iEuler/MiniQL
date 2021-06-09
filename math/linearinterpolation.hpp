@@ -11,9 +11,11 @@ namespace MiniQL {
 
 class LinearInterpolationImpl : public Interpolation::Impl {
   public:
+    // template<typename I1, typename I2>
+    // typedef std::vector<Real>::const_iterator Iter;
     LinearInterpolationImpl(const Iter& xBegin, const Iter& xEnd, const Iter& yBegin)
-    : Interpolation::Impl(xBegin, xEnd, yBegin),
-      s_(xEnd - xBegin) { }
+    : Interpolation::Impl(xBegin, xEnd, yBegin)
+    { s_.resize(xEnd - xBegin); }
       // primitiveConst_(xEnd - xBegin), 
       
     void update() override 
@@ -44,8 +46,8 @@ class LinearInterpolationImpl : public Interpolation::Impl {
 
 class LinearInterpolation : public Interpolation {    
   public:
-    typedef std::vector<Real>::iterator Iter;
-
+    typedef std::vector<Real>::const_iterator Iter;
+    // template<typename I1, typename I2>
     LinearInterpolation(const Iter& xBegin, const Iter& xEnd, const Iter& yBegin)
     {
       impl_ = std::make_shared<LinearInterpolationImpl>(xBegin, xEnd, yBegin);
@@ -57,7 +59,8 @@ class LinearInterpolation : public Interpolation {
 // Interpolator
 class Linear {
   public:
-    typedef std::vector<Real>::iterator Iter;
+    typedef std::vector<Real>::const_iterator Iter;
+    // template<typename I1, typename I2>
     Interpolation interpolate(const Iter& xBegin, const Iter& xEnd, const Iter& yBegin) const
     {
       return LinearInterpolation(xBegin, xEnd, yBegin);

@@ -60,6 +60,7 @@
     "condition_variable": "cpp",
     "mutex": "cpp",
     "numeric": "cpp",
-    "random": "cpp"
+    "random": "cpp",
+    "*.ipp": "cpp"
   }
 }
