@@ -9,6 +9,7 @@ namespace MiniQL {
   typedef double Rate;
   typedef double Time;
   typedef double DiscountFactor;
+  typedef double Probability;
   typedef std::size_t Size;
 
   constexpr Real QL_EPSILON = 1e-14;
@@ -21,7 +22,7 @@ namespace MiniQL {
   enum class Compounding {
     Simple,                 // 1+rT
     Compounded,             // (1+r)^T
-    Continuous,              // e^{rT}
+    Continuous,             // e^{rT}
     SimpleThenCompounded
   };
 

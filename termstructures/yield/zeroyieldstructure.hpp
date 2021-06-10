@@ -15,9 +15,9 @@ class ZeroYieldStructure : public YieldTermStructure {
   public:
     ZeroYieldStructure() = default;
     ZeroYieldStructure(const Date& referenceDate,
-                  const Calendar& calendar = Calendar(),
-                  const DayCounter& dc = DayCounter())
-      : YieldTermStructure(referenceDate, calendar, dc) {}    
+                       const Calendar& calendar = Calendar(),
+                       const DayCounter& dc = DayCounter())
+    : YieldTermStructure(referenceDate, calendar, dc) {}    
     ~ZeroYieldStructure() override = default;
 
   protected:    
