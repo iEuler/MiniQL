@@ -1,4 +1,4 @@
-// g++ examples/example12.cpp patterns/observable.cpp -o out
+// g++ examples/example12.cpp patterns/observable.cpp interestrate.cpp -o out
 #include <iostream>
 #include <memory>
 
@@ -9,6 +9,7 @@
 #include "../termstructures/yield/bootstraptraits.hpp"
 #include "../termstructures/yield/piecewiseyieldcurve.hpp"
 #include "../termstructures/yield/ratehelper.hpp"
+#include "../termstructures/yield/zerospreadedtermstructure.hpp"
 #include "../time/date.hpp"
 #include "../typedef.hpp"
 
@@ -20,6 +21,8 @@ int main() {
   std::shared_ptr<MiniQL::Quote> fra3Rate = std::make_shared<MiniQL::SimpleQuote>(0.003340);
   std::shared_ptr<MiniQL::Quote> fra4Rate = std::make_shared<MiniQL::SimpleQuote>(0.003620);
   std::shared_ptr<MiniQL::Quote> fra5Rate = std::make_shared<MiniQL::SimpleQuote>(0.003930);
+
+  std::shared_ptr<MiniQL::Quote> zSpread = std::make_shared<MiniQL::SimpleQuote>(0.001);
 
   std::shared_ptr<MiniQL::RateHelper> fra1 = std::make_shared<MiniQL::FraRateHelper>(
       MiniQL::Handle<MiniQL::Quote>(fra1Rate), 0.0);
@@ -51,9 +54,30 @@ int main() {
   auto times = euribo6MTermStructure->times();  
   auto dates = euribo6MTermStructure->dates();
   auto data = euribo6MTermStructure->data();
+  
+  
+  auto zSpreadedEuribo6MTermStructure = 
+    std::make_shared<MiniQL::ZeroSpreadedTermStructure> (
+        MiniQL::Handle<MiniQL::YieldTermStructure>(euribo6MTermStructure),
+        MiniQL::Handle<MiniQL::Quote>(zSpread));
 
-  std::cout << "date, time, zero yield" << std::endl;
+  std::vector<MiniQL::Real> df, zeroRates;
+  std::vector<MiniQL::Real> df_zspread, zeroRates_zspread;
+
+  for (auto t : times) {
+    df.push_back(euribo6MTermStructure->discount(t));
+    zeroRates.push_back(euribo6MTermStructure->zeroRate(t, MiniQL::Compounding::Continuous));
+  }
+
+  for (auto t : times) {
+    df_zspread.push_back(zSpreadedEuribo6MTermStructure->discount(t));
+    zeroRates_zspread.push_back(zSpreadedEuribo6MTermStructure->zeroRate(t, MiniQL::Compounding::Continuous));
+  }
+
+  std::cout << "date, time, zero yield, discount, zeroRate, discount_zspread, zeroRate_zspread" << std::endl;
   for (std::size_t i = 0; i < times.size(); ++i)
-    std::cout << dates[i] << ", " << times[i] << ", " << data[i] << std::endl;
+    std::cout << dates[i] << ", " << times[i] << ", " << data[i] << ", " 
+              << df[i] << ", " << zeroRates[i] << std::endl
+              << df_zspread[i] << ", " << zeroRates_zspread[i] << std::endl;
 
 }

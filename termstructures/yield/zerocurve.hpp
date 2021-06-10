@@ -79,7 +79,7 @@ void InterpolatedZeroCurve<Interpolator>::initialize(
   for (auto x : this->times_) std::cout << x << ", ";
   std::cout << std::endl;
 
-  if (comp != Compounding::Continous) {    
+  if (comp != Compounding::Continuous) {    
     this->times_[0] = 1.0/365;
     for (Size i=0; i<dates_.size(); ++i) 
     {
@@ -87,7 +87,7 @@ void InterpolatedZeroCurve<Interpolator>::initialize(
       std::cout << r << ", " << this->times_[i] << std::endl;
       this->data_[i] = r.equivalentRate(this->times_[i], 
                                         this->dayCounter_, 
-                                        Compounding::Continous, 
+                                        Compounding::Continuous, 
                                         frequency);  
     }
     this->times_[0] = 0.0;

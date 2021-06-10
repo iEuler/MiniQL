@@ -15,7 +15,7 @@ namespace MiniQL {
         return 1.0 + r_*t;
       case Compounding::Compounded:
         return std::pow(1+r_/f, t*f);
-      case Compounding::Continous:
+      case Compounding::Continuous:
         return std::exp(r_*t);
       case Compounding::SimpleThenCompounded:
         if (t<=1.0/f)
@@ -49,7 +49,7 @@ namespace MiniQL {
                      "positive compounded interest rate(" << compoundedRate << ") required.");
           r = f * (std::pow(compoundedRate, 1.0/(t*f)) - 1.0);
           break;
-        case Compounding::Continous:
+        case Compounding::Continuous:
           QL_REQUIRE(compoundedRate>=0.0, 
                      "positive compounded interest rate(" << compoundedRate << ") required.");          
           r = std::log(compoundedRate) / t;          

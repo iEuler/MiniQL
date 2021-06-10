@@ -21,7 +21,7 @@ namespace MiniQL {
   enum class Compounding {
     Simple,                 // 1+rT
     Compounded,             // (1+r)^T
-    Continous,              // e^{rT}
+    Continuous,              // e^{rT}
     SimpleThenCompounded
   };
 

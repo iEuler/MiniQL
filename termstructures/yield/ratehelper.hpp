@@ -1,17 +1,13 @@
 #ifndef MINIQL_RATEHELPER_HPP
 #define MINIQL_RATEHELPER_HPP
 
-
-#include "../../error.hpp"
-#include "../../interestrate.hpp"
+#include "../bootstraphelper.hpp"
 #include "../yieldtermstructure.hpp"
+#include "../../error.hpp"
+#include "../../handle.hpp"
+#include "../../quote.hpp"
 #include "../../typedef.hpp"
 #include "../../time/date.hpp"
-
-#include "../../quote.hpp"
-#include "../bootstraphelper.hpp"
-#include "../../handle.hpp"
-
 
 namespace MiniQL {
 

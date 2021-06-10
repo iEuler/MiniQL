@@ -54,7 +54,10 @@ class PiecewiseYieldCurve
 
     // Note: update() must be defined in this class, since it has been defined
     // in both base classes: InterpolatedZeroCurve<Interpolator> and LazyObejct
-    void update() override { LazyObject::update(); }  
+    void update() override { 
+      base_curve::update(); // TODO: Think about if this line is needed.
+      LazyObject::update(); 
+    }  
 
   private:
     void performCalculations() const override;
