@@ -28,6 +28,6 @@ int main() {
   std::cout << double() << std::endl;
   A a;
   a.testB();
-  MiniQL::Instrument inst;
+  // MiniQL::Instrument inst;
   MiniQL::Swap s;
 }

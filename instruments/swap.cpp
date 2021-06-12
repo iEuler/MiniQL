@@ -29,13 +29,14 @@ void Swap::performCalculations() const
   Real npv1 = 0.0, npv2 = 0.0;
   Real ir = termStructure_->interestRate();
   Date t0 = termStructure_->referenceDate();
+  DayCounter dc;
   for (auto &pcf : firstLeg_) {
     if (!pcf->hasOccured(t0)) 
-      npv1 += std::exp( - ir * (pcf->date() - t0) ) * pcf->amount();            
+      npv1 += std::exp( - ir * dc.yearFraction(t0, pcf->date()) ) * pcf->amount();  
   }
   for (auto &pcf : secondLeg_) {
     if (!pcf->hasOccured(t0)) 
-      npv2 += std::exp( - ir * (pcf->date() - t0) ) * pcf->amount();      
+      npv2 += std::exp( - ir * dc.yearFraction(t0, pcf->date()) ) * pcf->amount();      
   }
   NPV_ = - npv1 + npv2;
 }

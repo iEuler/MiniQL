@@ -14,7 +14,7 @@
 #include "../typedef.hpp"
 
 int main() {
-  MiniQL::Date settlementDate = 0.0;
+  MiniQL::Date settlementDate = 0;
 
   std::shared_ptr<MiniQL::Quote> fra1Rate = std::make_shared<MiniQL::SimpleQuote>(0.002930);
   std::shared_ptr<MiniQL::Quote> fra2Rate = std::make_shared<MiniQL::SimpleQuote>(0.003100);
@@ -25,15 +25,15 @@ int main() {
   std::shared_ptr<MiniQL::Quote> zSpread = std::make_shared<MiniQL::SimpleQuote>(0.001);
 
   std::shared_ptr<MiniQL::RateHelper> fra1 = std::make_shared<MiniQL::FraRateHelper>(
-      MiniQL::Handle<MiniQL::Quote>(fra1Rate), 0.0);
+      MiniQL::Handle<MiniQL::Quote>(fra1Rate), 0);
   std::shared_ptr<MiniQL::RateHelper> fra2 = std::make_shared<MiniQL::FraRateHelper>(
-      MiniQL::Handle<MiniQL::Quote>(fra2Rate), 0.25);
+      MiniQL::Handle<MiniQL::Quote>(fra2Rate), 90);
   std::shared_ptr<MiniQL::RateHelper> fra3 = std::make_shared<MiniQL::FraRateHelper>(
-      MiniQL::Handle<MiniQL::Quote>(fra3Rate), 0.5);
+      MiniQL::Handle<MiniQL::Quote>(fra3Rate), 180);
   std::shared_ptr<MiniQL::RateHelper> fra4 = std::make_shared<MiniQL::FraRateHelper>(
-      MiniQL::Handle<MiniQL::Quote>(fra4Rate), 0.75);
+      MiniQL::Handle<MiniQL::Quote>(fra4Rate), 270);
   std::shared_ptr<MiniQL::RateHelper> fra5 = std::make_shared<MiniQL::FraRateHelper>(
-      MiniQL::Handle<MiniQL::Quote>(fra5Rate), 1.0);
+      MiniQL::Handle<MiniQL::Quote>(fra5Rate), 365);
   
   std::vector<std::shared_ptr<MiniQL::RateHelper>> euribo6MInstruments;
   euribo6MInstruments.push_back(fra1);
@@ -77,7 +77,7 @@ int main() {
   std::cout << "date, time, zero yield, discount, zeroRate, discount_zspread, zeroRate_zspread" << std::endl;
   for (std::size_t i = 0; i < times.size(); ++i)
     std::cout << dates[i] << ", " << times[i] << ", " << data[i] << ", " 
-              << df[i] << ", " << zeroRates[i] << std::endl
+              << df[i] << ", " << zeroRates[i] << ", "
               << df_zspread[i] << ", " << zeroRates_zspread[i] << std::endl;
 
 }

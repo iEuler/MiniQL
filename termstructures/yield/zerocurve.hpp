@@ -48,7 +48,7 @@ class InterpolatedZeroCurve : public ZeroYieldStructure,
     mutable std::vector<Date> dates_;
   
   private:
-    void initialize(const Compounding& comp = Compounding::Simple,
+    void initialize(const Compounding& comp = Compounding::Continuous,
                     const Frequency& frequency = Frequency::Annual);
 };
 
@@ -72,13 +72,10 @@ void InterpolatedZeroCurve<Interpolator>::initialize(
   const Frequency& frequency)
 {
   this->times_.resize(dates_.size());
+  this->times_[0] = 0.0;
   for (Size i=1; i<dates_.size(); ++i) 
     this->times_[i] = this->dayCounter_.yearFraction(dates_[0], dates_[i]);      
   
-  std::cout << "flag 1" << std::endl;
-  for (auto x : this->times_) std::cout << x << ", ";
-  std::cout << std::endl;
-
   if (comp != Compounding::Continuous) {    
     this->times_[0] = 1.0/365;
     for (Size i=0; i<dates_.size(); ++i) 
@@ -92,8 +89,6 @@ void InterpolatedZeroCurve<Interpolator>::initialize(
     }
     this->times_[0] = 0.0;
   }
-
-  std::cout << "flag 2" << std::endl;
 
   // need to rebuild interpolation_, which depends on times_
   this->interpolation_ = this->interpolator_.interpolate(this->times_.begin(),

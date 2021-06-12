@@ -6,7 +6,7 @@
 
 
 int main() {
-  MiniQL::Settings::instance().evaluationDate() = 3.4;  
+  MiniQL::Settings::instance().evaluationDate() = 1000;  
   std::cout << MiniQL::Settings::instance().evaluationDate() << std::endl;
 
   auto x = std::vector<int>({7});

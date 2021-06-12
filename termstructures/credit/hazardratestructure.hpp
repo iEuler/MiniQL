@@ -3,9 +3,9 @@
 
 #include <cmath>
 
-#include "../time/date.hpp"
+#include "../../time/date.hpp"
 #include "../defaulttermstructure.hpp"
-#include "../typedef.hpp"
+#include "../../typedef.hpp"
 
 namespace MiniQL {
 

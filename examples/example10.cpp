@@ -27,7 +27,7 @@ int main() {
   }
 
   // MiniQL::Date today = 0.0;  
-  std::vector<MiniQL::Date> dates{0.3, 1.0, 2.0, 2.5, 3.0};
+  std::vector<MiniQL::Date> dates{100, 365, 2*365, 900, 3*365};
   std::vector<MiniQL::Rate> yields{0.005, 0.01, 0.02, 0.03, 0.04};
   MiniQL::InterpolatedZeroCurve<MiniQL::Linear> zero(dates, yields);
 

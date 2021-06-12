@@ -93,7 +93,7 @@ void IterativeBootstrap<Curve>::initialize() const
     const std::shared_ptr<typename Traits::helper>& helper = ts_->instruments_[j];
     dates[i] = helper->maturityDate();
     times[i] = ts_->timeFromReference(dates[i]);
-    QL_REQUIRE(std::abs(dates[i] - dates[i-1])>QL_EPSILON, 
+    QL_REQUIRE(dates[i] > dates[i-1], 
                "more than one instrument with maturity " << dates[i]); 
     errors_[i] = std::make_shared<BootstrapError<Curve>>(ts_, helper, i);
   }

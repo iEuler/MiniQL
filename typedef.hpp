@@ -35,6 +35,10 @@ namespace MiniQL {
     Monthly = 12,           // once a month
   };
   
+  struct Protection {
+    enum Side { Buyer, Seller };
+  };
+
 }  // namespace MiniQL
 
 #endif

@@ -9,26 +9,33 @@
 namespace MiniQL {
 
 class Date {
-    // friend Time operator-(const Date& date1, const Date& date2);
-    // friend Date operator-(const Date& date1, const Time& years);
-    // friend Date operator+(const Date& date1, const Time& years);
-    // friend Date operator+(const Time& years, const Date& date1);
+    // friend date_type operator-(const Date& date1, const Date& date2);
+    // friend Date operator-(const Date& date1, const date_type& days);
+    // friend Date operator+(const Date& date1, const date_type& days);
+    // friend Date operator+(const date_type& days, const Date& date1);
     // friend std::ostream& operator<<(std::ostream& os, const Date& date) {
     //   return os << date.date_;
     // }
+    
   public:
+    typedef long date_type;
+    typedef long date_difference_type;
+
     Date() = default;
     Date(double date) : date_(date) {}
     ~Date() = default;
 
-    Time date() const { return date_; }
+    date_type date() const { return date_; }
 
-    Date& operator+=(Time years) {
-      date_ += years;
+    date_type addYears(Time t) const { return Date(date_ + date_type(t*365)); }
+    date_type addDays(date_difference_type d) const { return Date(date_ + d); }
+
+    Date& operator+=(date_difference_type days) {
+      date_ += days;
       return *this;
     }
-    Date& operator-=(Time years) {
-      date_ -= years;
+    Date& operator-=(date_difference_type days) {
+      date_ -= days;
       return *this;
     }
     bool operator<(const Date& date) {      
@@ -46,28 +53,28 @@ class Date {
     bool operator==(const Date& date) {      
       return date_ == date.date_;
     }
-    operator Time() const { return date_; }
+    operator long() const { return date_; }
     
     
   protected:
-    Time date_ = 0.0;
+    date_type date_ = 0.0;
 
 };
 
-inline Time operator-(const Date& date1, const Date& date2) {
+inline Date::date_difference_type operator-(const Date& date1, const Date& date2) {
   return date1.date() - date2.date();
 }
 
-inline Date operator-(const Date& date1, const Time& years) {  
-  return Date(date1.date() - years);
+inline Date operator-(const Date& date1, const Date::date_difference_type& days) {  
+  return Date(date1.date() - days);
 }
 
-inline Date operator+(const Date& date1, const Time& years) {  
-  return Date(date1.date() + years);
+inline Date operator+(const Date& date1, const Date::date_difference_type& days) {  
+  return Date(date1.date() + days);
 }
 
-inline Date operator+(const Time& years, const Date& date1) {  
-  return Date(date1.date() + years);
+inline Date operator+(const Date::date_difference_type& days, const Date& date1) {  
+  return Date(date1.date() + days);
 }
 
 
@@ -89,7 +96,7 @@ class DayCounter {
     std::string name() const { return name_; }
     // Time yearFraction(const Date& date1, const Date& date2) const;
     Time yearFraction(const Date& date1, const Date& date2) const {
-      return date2 - date1;
+      return 1.0 * (date2 - date1) / 365.0;
     }
 
 

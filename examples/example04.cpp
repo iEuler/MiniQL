@@ -9,16 +9,16 @@
 #include "../time/date.hpp"
 
 int main() {
-  MiniQL::Date startDate{0.0}, maturity{3.0};
+  MiniQL::Date startDate{100}, maturity{3*365};
   MiniQL::Time couponFreq{.25};
-  MiniQL::Date couponDate = startDate + couponFreq;
+  MiniQL::Date couponDate = startDate.addYears(couponFreq);
   MiniQL::Real couponRate = 0.1, couponAmount = couponRate * couponFreq;
   MiniQL::Real interestRate = 0.1;
   MiniQL::Swap::Leg leg1, leg2;
   while (couponDate <= maturity) 
   {
     leg1.push_back(std::make_shared<MiniQL::CashFlow>(couponDate, couponAmount));
-    couponDate += couponFreq;
+    couponDate = couponDate.addYears(couponFreq);
   }  
   // MiniQL::Swap::Handle termStructure = 
   //     std::make_shared<MiniQL::FlatTermStructure>(startDate, interestRate);

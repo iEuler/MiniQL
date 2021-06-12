@@ -38,7 +38,7 @@ class FraRateHelper : public RateHelper {
   protected:
     void initializeDates() {
       earliestDate_ = startDate_;
-      maturityDate_ = startDate_ + spanningTime_;
+      maturityDate_ = startDate_.addYears(spanningTime_);
     }
     RelinkableHandle<YieldTermStructure> termStructureHandle_;
     Date startDate_;
