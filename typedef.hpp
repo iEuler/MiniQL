@@ -5,9 +5,10 @@ namespace MiniQL {
   
 
   // typedef double Date;
-  typedef double Real;
   typedef double Rate;
+  typedef double Real;
   typedef double Time;
+  typedef double Period;
   typedef double DiscountFactor;
   typedef double Probability;
   typedef std::size_t Size;

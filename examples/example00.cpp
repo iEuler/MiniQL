@@ -15,6 +15,8 @@ void print(const Args&... args) {
   std::cout << "Another variadic function." << std::endl;  
 }
 
+enum class Foo { a = 1, b = 4, c = 10 };
+
 int main() {
   std::cout << __cplusplus << std::endl;
   print("hello", 4, 2.3);
@@ -29,4 +31,6 @@ int main() {
   int x = 123;
   std::cout << std::hash<int*>() (&x) << std::endl;
   std::cout << reinterpret_cast<size_t>(&x) << std::endl;
+
+  // int xx = Foo::b;
 }

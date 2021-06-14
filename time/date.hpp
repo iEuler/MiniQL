@@ -66,15 +66,18 @@ inline Date::date_difference_type operator-(const Date& date1, const Date& date2
 }
 
 inline Date operator-(const Date& date1, const Date::date_difference_type& days) {  
-  return Date(date1.date() - days);
+  Date tmp(date1);
+  return tmp -= days;
 }
 
 inline Date operator+(const Date& date1, const Date::date_difference_type& days) {  
-  return Date(date1.date() + days);
+  Date tmp(date1);
+  return tmp += days;
 }
 
 inline Date operator+(const Date::date_difference_type& days, const Date& date1) {  
-  return Date(date1.date() + days);
+  Date tmp(date1);
+  return tmp += days;
 }
 
 
